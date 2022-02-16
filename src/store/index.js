@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from 'axios'
+//import axios from 'axios'
+
 
 
 
@@ -12,8 +13,8 @@ export const store = new Vuex.Store({
     liste: null,
     data: null,
     dPie: null,
-    articles:null,
-    article:null,
+    articles: null,
+    mPA: null,
   },
   mutations: {
     setListe(state, liste) {
@@ -25,15 +26,15 @@ export const store = new Vuex.Store({
     setDataPie(state, dPie) {
       state.dPie = dPie;
     },
-    setArticles(state,articles){
-      state.articles= articles;
+    setArticles(state, articles) {
+      state.articles = articles;
     },
-    setArticle(state,article){
-      state.article= article;
+    setMostPopularTopics(state, mPA) {
+      state.mPA = mPA;
     }
   },
   actions: {
-    async link({ commit }, params) {
+ /*    async link({ commit }, params) {
       let formData = new FormData();
       formData.append("url", params);
       await axios.post("http://127.0.0.1:5000/run", formData)
@@ -48,12 +49,35 @@ export const store = new Vuex.Store({
         .then(response => {
           commit('setDataPie', response.data)
         })
-    },
+    }, */
     async articles({ commit }, params) {
-      commit('setArticles',params)
+      commit('setArticles', params)
     },
-    async upArticle({ commit }, params) {
-      commit('setArticle',params)
+    async mostPopularTopics({ commit }, params) {
+      let cat = [];
+      let counts = []
+      params.forEach(element => {
+        let max = null;
+        let tab = element['counts'];
+        for (var key in tab) {
+          if (max == null) {
+            max = [key, tab[key]]
+          } else {
+            if (tab[key] > max[1]) {
+              max = [key, tab[key]]
+            }
+          }
+        }
+
+
+        if (max != null) {
+          cat.push([max[0], element['dateTime']])
+          counts.push(max[1])
+        }
+
+
+      });
+      commit('setMostPopularTopics', [cat, counts])
     },
 
   },
@@ -64,6 +88,6 @@ export const store = new Vuex.Store({
     getData: state => state.data,
     getDataPie: state => state.dPie,
     getArticles: state => state.articles,
-    getArticle: state => state.article,
+    getMostPopularTopics: state => state.mPA,
   }
 })

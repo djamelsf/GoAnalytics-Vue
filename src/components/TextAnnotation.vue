@@ -55,6 +55,10 @@
         >
         </wordcloud>
 
+        <div id="nav-scroller" style="position: relative; height: 400px; overflow-y: scroll">
+          <b-table hover :items="defaultWords"></b-table>
+        </div>
+
         <!-- --------------------------------- -->
       </b-col>
     </b-row>
@@ -82,44 +86,7 @@ export default {
       article: null,
       words: tfidf,
 
-      defaultWords: [
-        {
-          name: "Cat",
-          value: 26,
-        },
-        {
-          name: "fish",
-          value: 19.4,
-        },
-        {
-          name: "things",
-          value: 18,
-        },
-        {
-          name: "look",
-          value: 16,
-        },
-        {
-          namess: "two22",
-          value: 15,
-        },
-        {
-          name: "fun",
-          value: 9,
-        },
-        {
-          name: "know",
-          value: 9,
-        },
-        {
-          name: "good",
-          value: 9,
-        },
-        {
-          name: "play",
-          value: 6,
-        },
-      ],
+      defaultWords: [],
 
       html: "",
       url: "",
@@ -131,8 +98,6 @@ export default {
           width: 380,
           type: "pie",
         },
-        //labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
-        //labels: ["Person", "Event", "Organization", "Artifact", "Yagogeoentity"],
         labels: null,
         responsive: [
           {
@@ -173,7 +138,6 @@ export default {
       this.HTMLcontent =
         '<div class="entities" style="line-height: 2.5; direction: ltr">';
       //await this.link(url);
-      console.log(this.getData);
       this.html = article["content"];
       this.data = article["ents"];
       let last = 0;
@@ -204,16 +168,11 @@ export default {
       this.HTMLcontent +=
         this.html.substring(last, this.html.length) + "</div>";
 
-      /*       await this.dataPie(url);
-      let res = this.getDataPie;
-      this.series = res[1];
-      this.chartOptions.labels = res[0]; */
       this.show = true;
 
       let tab = [];
       for (const key in this.words[id]) {
         const element = this.words[id][key];
-        console.log(key + " " + element);
         let elt = { name: key, value: element };
         tab.push(elt);
       }
@@ -224,8 +183,6 @@ export default {
     ...mapGetters(["getArticle"]),
   },
   async created() {
-    //this.upArticle(this.dataJson[10]);
-
     this.NED(this.dataJson[10]["id"]);
   },
 };

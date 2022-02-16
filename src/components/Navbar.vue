@@ -17,9 +17,10 @@
                 alt="Kitten"
               />
             </b-navbar-brand>
-            <b-nav-item to="/search" class="items">Dashboard</b-nav-item>
+            <b-nav-item to="/." class="items">Dashboard</b-nav-item>
             <b-nav-item to="/search" class="items">News articles</b-nav-item>
             <b-nav-item to="/about" class="items">Comparison</b-nav-item>
+            <b-nav-item to="/about" class="items">Temporality</b-nav-item>
           </b-navbar-nav>
         </div>
       </b-collapse>

@@ -11,15 +11,15 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  // {
-  //   path: '/search',
-  //   name: 'Search',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/Search.vue')
-  // },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/news',
+    name: 'News',
+    component: () => import(/* webpackChunkName: "about" */ '../views/News.vue')
+  },
+  {
+    path: '/comparison',
+    name: 'Comparison',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ComparisonPage.vue')
   },
 
   // { path: '/gare/:id', component: () => import(/* webpackChunkName: "about" */ '../views/Gare.vue') }

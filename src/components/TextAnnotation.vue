@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="textAnnotation">
     <b-row>
       <b-col cols="12" md="3">
         <br />
@@ -55,9 +55,9 @@
         >
         </wordcloud>
 
-        <div id="nav-scroller" style="position: relative; height: 400px; overflow-y: scroll">
+    <!--     <div id="nav-scroller" style="position: relative; height: 400px; overflow-y: scroll">
           <b-table hover :items="defaultWords"></b-table>
-        </div>
+        </div> -->
 
         <!-- --------------------------------- -->
       </b-col>

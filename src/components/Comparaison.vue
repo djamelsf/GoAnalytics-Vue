@@ -40,17 +40,12 @@
         </b-col>
       </b-row>
       <div>
-          <br>
+        <br />
         <b-card title="Similarities ">
-          <b-card-text>
-            Cosine similarity : {{cosine}}
-          </b-card-text>
-           <b-card-text>
-            Jaccard Similarity : 
-          </b-card-text>
+          <b-card-text> Cosine similarity : {{ cosine }} </b-card-text>
+          <b-card-text> Jaccard Similarity : </b-card-text>
 
           <b-card-text>A second paragraph of text in the card.</b-card-text>
-
         </b-card>
       </div>
     </div>
@@ -58,6 +53,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 //import axios from "axios";
 /* import { mapGetters, mapActions } from "vuex"; */
 import dataJson from "../assets/data.json";
@@ -79,7 +75,7 @@ export default {
       },
       doc1Content: null,
       doc2Content: null,
-      cosine:2.403,
+      cosine: 2.403,
     };
   },
   methods: {
@@ -89,7 +85,7 @@ export default {
       this.render(this.form.doc1, 1);
       this.render(this.form.doc2, 2);
     },
-    render(title, i) {
+    async render(title, i) {
       let HTMLcontent = "";
       this.show = false;
 
@@ -138,10 +134,16 @@ export default {
         this.doc2Content = HTMLcontent;
       }
 
+      await this.link([this.doc1Content, this.doc2Content]);
+      this.cosine=this.getData
+
       this.show = true;
     },
+    ...mapActions(["link"]),
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["getData"]),
+  },
   created() {
     let tab = [];
     this.dataJson.forEach((element) => {

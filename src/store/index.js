@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-//import axios from 'axios'
+import axios from 'axios'
 
 
 
@@ -34,14 +34,15 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    /*    async link({ commit }, params) {
-         let formData = new FormData();
-         formData.append("url", params);
-         await axios.post("http://127.0.0.1:5000/run", formData)
-           .then(response => {
-             commit('setData', response.data)
-           })
-       },
+    async link({ commit }, params) {
+      let formData = new FormData();
+      formData.append("doc1", params[0]);
+      formData.append("doc2", params[1]);
+      await axios.post("http://127.0.0.1:5000/simCos", formData)
+        .then(response => {
+          commit('setData', response.data)
+        })
+    }, /*
        async dataPie({ commit }, params) {
          let formData = new FormData();
          formData.append("url", params);

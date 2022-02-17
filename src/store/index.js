@@ -34,22 +34,22 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
- /*    async link({ commit }, params) {
-      let formData = new FormData();
-      formData.append("url", params);
-      await axios.post("http://127.0.0.1:5000/run", formData)
-        .then(response => {
-          commit('setData', response.data)
-        })
-    },
-    async dataPie({ commit }, params) {
-      let formData = new FormData();
-      formData.append("url", params);
-      await axios.post("http://127.0.0.1:5000/getTopTypes", formData)
-        .then(response => {
-          commit('setDataPie', response.data)
-        })
-    }, */
+    /*    async link({ commit }, params) {
+         let formData = new FormData();
+         formData.append("url", params);
+         await axios.post("http://127.0.0.1:5000/run", formData)
+           .then(response => {
+             commit('setData', response.data)
+           })
+       },
+       async dataPie({ commit }, params) {
+         let formData = new FormData();
+         formData.append("url", params);
+         await axios.post("http://127.0.0.1:5000/getTopTypes", formData)
+           .then(response => {
+             commit('setDataPie', response.data)
+           })
+       }, */
     async articles({ commit }, params) {
       commit('setArticles', params)
     },

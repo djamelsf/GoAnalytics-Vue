@@ -15,7 +15,7 @@ export const store = new Vuex.Store({
     dPie: null,
     articles: null,
     mPA: null,
-    temporality:null,
+    temporality: null,
   },
   mutations: {
     setListe(state, liste) {
@@ -33,7 +33,7 @@ export const store = new Vuex.Store({
     setMostPopularTopics(state, mPA) {
       state.mPA = mPA;
     },
-    setTemporality(state,temporality){
+    setTemporality(state, temporality) {
       state.temporality = temporality;
     }
   },
@@ -46,15 +46,15 @@ export const store = new Vuex.Store({
         .then(response => {
           commit('setData', response.data)
         })
-    }, /*
-       async dataPie({ commit }, params) {
-         let formData = new FormData();
-         formData.append("url", params);
-         await axios.post("http://127.0.0.1:5000/getTopTypes", formData)
-           .then(response => {
-             commit('setDataPie', response.data)
-           })
-       }, */
+    },
+    async dataPie({ commit }, params) {
+      let formData = new FormData();
+      formData.append("content", params);
+      await axios.post("http://127.0.0.1:5000/getTopTypes", formData)
+        .then(response => {
+          commit('setDataPie', response.data)
+        })
+    },
     async articles({ commit }, params) {
       commit('setArticles', params)
     },

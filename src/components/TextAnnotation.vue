@@ -32,30 +32,47 @@
           <div class="overflow-auto" style="height: 500px">
             <div class="aa" v-html="HTMLcontent"></div>
           </div>
-          <!--       <div id="chart">
-        <apexchart
-          type="pie"
-          width="380"
-          :options="chartOptions"
-          :series="series"
-        ></apexchart>
-      </div> -->
+          <!-- --------------------------------- -->
+          <!--           <div id="chart" v-if="show">
+            <apexchart
+              type="pie"
+              width="380"
+              :options="chartOptions"
+              :series="series"
+            ></apexchart>
+          </div> -->
+          <!-- --------------------------------- -->
         </div>
         <div v-else><b-spinner label="Loading..."></b-spinner></div>
         <br />
         <!-- --------------------------------- -->
-        <h3>Words that characterize the article</h3>
-        <wordcloud
-          :data="defaultWords"
-          nameKey="name"
-          valueKey="value"
-          color="Accent"
-          :showTooltip="false"
-          :wordClick="wordClickHandler"
-        >
-        </wordcloud>
+        <b-row>
+          <b-col cols="12" md="5">
+            <h3>Words that characterize the article</h3>
+            <div id="chart" v-if="show">
+              <apexchart
+                type="pie"
+                width="380"
+                :options="chartOptions"
+                :series="series"
+              ></apexchart>
+            </div>
+          </b-col>
+          <b-col cols="12" md="7">
+            <h3>Words that characterize the article</h3>
+            <wordcloud
+              :data="defaultWords"
+              nameKey="name"
+              valueKey="value"
+              color="Accent"
+              :showTooltip="false"
+              :wordClick="wordClickHandler"
+            >
+            </wordcloud>
+          </b-col>
+        </b-row>
 
-    <!--     <div id="nav-scroller" style="position: relative; height: 400px; overflow-y: scroll">
+        <!--     <div id="nav-scroller" style="position: relative; height: 400px; overflow-y: scroll">
           <b-table hover :items="defaultWords"></b-table>
         </div> -->
 
@@ -92,13 +109,13 @@ export default {
       url: "",
       data: [],
       HTMLcontent: "",
-      series: null,
+      series: [],
       chartOptions: {
         chart: {
           width: 380,
           type: "pie",
         },
-        labels: null,
+        labels: [],
         responsive: [
           {
             breakpoint: 480,
@@ -116,7 +133,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["upArticle"]),
+    ...mapActions(["dataPie"]),
     test(article) {
       this.article = article;
       this.NED(article["id"]);
@@ -124,7 +141,7 @@ export default {
     wordClickHandler(name, value, vm) {
       console.log("wordClickHandler", name, value, vm);
     },
-    NED(id) {
+    async NED(id) {
       this.show = false;
 
       let article = null;
@@ -137,7 +154,6 @@ export default {
       this.title = article["title"];
       this.HTMLcontent =
         '<div class="entities" style="line-height: 2.5; direction: ltr">';
-      //await this.link(url);
       this.html = article["content"];
       this.data = article["ents"];
       let last = 0;
@@ -168,6 +184,11 @@ export default {
       this.HTMLcontent +=
         this.html.substring(last, this.html.length) + "</div>";
 
+      await this.dataPie(this.html);
+      this.series = this.getDataPie[1];
+      this.chartOptions.labels = this.getDataPie[0];
+      console.log(this.chartOptions.labels);
+
       this.show = true;
 
       let tab = [];
@@ -180,10 +201,10 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getArticle"]),
+    ...mapGetters(["getDataPie"]),
   },
   async created() {
-    this.NED(this.dataJson[10]["id"]);
+    await this.NED(this.dataJson[10]["id"]);
   },
 };
 </script>

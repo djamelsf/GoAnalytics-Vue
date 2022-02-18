@@ -12,6 +12,8 @@ export const store = new Vuex.Store({
   state: {
     liste: null,
     data: null,
+    dataJ:null,
+    dataSpacy:null,
     dPie: null,
     articles: null,
     mPA: null,
@@ -24,6 +26,9 @@ export const store = new Vuex.Store({
     setData(state, data) {
       state.data = data;
     },
+    setDataSpacy(state, dataSpacy) {
+      state.dataSpacy = dataSpacy;
+    },
     setDataPie(state, dPie) {
       state.dPie = dPie;
     },
@@ -35,6 +40,9 @@ export const store = new Vuex.Store({
     },
     setTemporality(state, temporality) {
       state.temporality = temporality;
+    },
+    setDataJ(state,dataJ){
+      state.dataJ=dataJ;
     }
   },
   actions: {
@@ -45,6 +53,24 @@ export const store = new Vuex.Store({
       await axios.post("http://127.0.0.1:5000/simCos", formData)
         .then(response => {
           commit('setData', response.data)
+        })
+    },
+    async simSpacy({ commit }, params) {
+      let formData = new FormData();
+      formData.append("doc1", params[0]);
+      formData.append("doc2", params[1]);
+      await axios.post("http://127.0.0.1:5000/simSpacy", formData)
+        .then(response => {
+          commit('setDataSpacy', response.data)
+        })
+    },
+    async jSim({ commit }, params) {
+      let formData = new FormData();
+      formData.append("doc1", params[0]);
+      formData.append("doc2", params[1]);
+      await axios.post("http://127.0.0.1:5000/jSim", formData)
+        .then(response => {
+          commit('setDataJ', response.data)
         })
     },
     async dataPie({ commit }, params) {
@@ -82,6 +108,7 @@ export const store = new Vuex.Store({
 
 
       });
+      console.log([cat, counts]);
       commit('setMostPopularTopics', [cat, counts])
     },
     async computeTemporality({ commit }, params) {
@@ -99,9 +126,11 @@ export const store = new Vuex.Store({
   getters: {
     liste: state => state.liste,
     getData: state => state.data,
+    getDataSpacy: state => state.dataSpacy,
     getDataPie: state => state.dPie,
     getArticles: state => state.articles,
     getMostPopularTopics: state => state.mPA,
     getTemporality: state => state.temporality,
+    getDataJ: state=> state.dataJ,
   }
 })

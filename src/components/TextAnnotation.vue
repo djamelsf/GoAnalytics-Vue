@@ -48,7 +48,7 @@
         <!-- --------------------------------- -->
         <b-row>
           <b-col cols="12" md="5">
-            <h3>Words that characterize the article</h3>
+            <h3>Top-level types classification</h3>
             <div id="chart" v-if="show">
               <apexchart
                 type="pie"
@@ -187,7 +187,6 @@ export default {
       await this.dataPie(this.html);
       this.series = this.getDataPie[1];
       this.chartOptions.labels = this.getDataPie[0];
-      console.log(this.chartOptions.labels);
 
       this.show = true;
 

@@ -4,7 +4,7 @@
       <b-row>
         <b-col cols="12" md="6">
           <b-form-input
-            placeholder="Search"
+            placeholder="Article title 1"
             v-model="form.doc1"
             list="input-list"
             id="input-with-list"
@@ -14,7 +14,7 @@
         </b-col>
         <b-col cols="12" md="6">
           <b-form-input
-            placeholder="Search"
+            placeholder="Article title 2"
             v-model="form.doc2"
             list="input-list"
             id="input-with-list"
@@ -32,23 +32,43 @@
           <div class="overflow-auto" style="height: 500px">
             <div class="aa" v-html="doc1Content"></div>
           </div>
+
+          <div id="chart" v-if="sh">
+            <apexchart
+              type="pie"
+              width="380"
+              :options="chartOptions1"
+              :series="series1"
+            ></apexchart>
+          </div>
         </b-col>
         <b-col cols="12" md="6">
           <div class="overflow-auto" style="height: 500px">
             <div class="aa" v-html="doc2Content"></div>
           </div>
+
+          <div id="chart2" v-if="sh">
+            <apexchart
+              type="pie"
+              width="380"
+              :options="chartOptions2"
+              :series="series2"
+            ></apexchart>
+          </div>
         </b-col>
       </b-row>
       <div>
         <br />
-        <b-card title="Similarities ">
-          <b-card-text> Cosine similarity : {{ cosine }} </b-card-text>
-          <b-card-text> Jaccard Similarity : </b-card-text>
-
-          <b-card-text>A second paragraph of text in the card.</b-card-text>
+        <b-card title="Similarities" v-if="sh">
+          <b-card-text>
+            Cosine similarity (Without Stop words) : {{ cosine }}
+          </b-card-text>
+          <b-card-text> Similarity (Spacy) : {{ sim }} </b-card-text>
+          <b-card-text> Jaccard Similarity : {{ jaccard }} </b-card-text>
         </b-card>
       </div>
     </div>
+    <div v-else><b-spinner label="Loading..."></b-spinner></div>
   </div>
 </template>
 
@@ -63,27 +83,84 @@ export default {
   name: "Comparaison",
   data: function () {
     return {
-      show: false,
+      show: true,
+      sh: false,
       dataJson: dataJson,
       img: null,
       html: "",
       data: [],
+      jaccard:null,
       options: [],
+      doc1: null,
+      doc2: null,
       form: {
         doc1: null,
         doc2: null,
       },
       doc1Content: null,
       doc2Content: null,
-      cosine: 2.403,
+      cosine: null,
+      sim: null,
+      series1: [44, 55, 13, 43, 22],
+      series2: [44, 55, 13, 43, 22],
+      chartOptions1: {
+        chart: {
+          width: 380,
+          type: "pie",
+        },
+        labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
+      chartOptions2: {
+        chart: {
+          width: 380,
+          type: "pie",
+        },
+        labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
     };
   },
   methods: {
-    onSubmit(event) {
+    async onSubmit(event) {
       event.preventDefault();
       //alert(JSON.stringify(this.form));
-      this.render(this.form.doc1, 1);
-      this.render(this.form.doc2, 2);
+      this.sh = false;
+      await this.render(this.form.doc1, 1);
+      await this.render(this.form.doc2, 2);
+
+      await this.link([this.doc1, this.doc2]);
+      await this.simSpacy([this.doc1, this.doc2]);
+      await this.jSim([this.doc1, this.doc2]);
+      this.cosine = this.getData;
+      this.sim = this.getDataSpacy;
+      this.jaccard=this.getDataJ;
+      this.show = true;
+      this.sh = true;
     },
     async render(title, i) {
       let HTMLcontent = "";
@@ -127,22 +204,25 @@ export default {
         last = ligne["end"];
       }
       HTMLcontent += this.html.substring(last, this.html.length) + "</div>";
-
+      await this.dataPie(this.html);
       if (i == 1) {
         this.doc1Content = HTMLcontent;
+        this.doc1 = this.html;
+        this.series1 = this.getDataPie[1];
+        this.chartOptions1.labels = this.getDataPie[0];
       } else {
         this.doc2Content = HTMLcontent;
+        this.doc2 = this.html;
+        this.series2 = this.getDataPie[1];
+        this.chartOptions2.labels = this.getDataPie[0];
       }
-
-      await this.link([this.doc1Content, this.doc2Content]);
-      this.cosine=this.getData
 
       this.show = true;
     },
-    ...mapActions(["link"]),
+    ...mapActions(["link", "simSpacy", "dataPie","jSim"]),
   },
   computed: {
-    ...mapGetters(["getData"]),
+    ...mapGetters(["getData", "getDataSpacy", "getDataPie","getDataJ"]),
   },
   created() {
     let tab = [];

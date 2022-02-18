@@ -58,7 +58,7 @@ export default {
         },
         yaxis: {
           title: {
-            text: "$ (thousands)",
+            text: "Number of occurrences of a type ",
           },
         },
         fill: {

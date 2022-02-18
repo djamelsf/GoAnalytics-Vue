@@ -1,14 +1,14 @@
 <template>
   <div id="Temporality">
     <b-form-input
-      placeholder="Search"
-      list="input-list"
+      placeholder="Search entity"
+      list="input1-list"
       @change="search(word)"
       v-model="word"
-      id="input-with-list"
+      id="input-with-list1"
       required
     ></b-form-input>
-    <b-form-datalist id="input-list" :options="options"></b-form-datalist>
+    <b-form-datalist id="input1-list" :options="options"></b-form-datalist>
     <br />
     <div id="chart">
       <apexchart
@@ -39,25 +39,7 @@ export default {
         {
           data: [
             {
-              x: "Code",
-              y: [
-                new Date("2011-09-29T10:38:46Z").getTime(),
-                new Date("2011-09-29T20:10:28Z").getTime(),
-              ],
-            },
-            {
-              x: "Code2",
-              y: [
-                new Date("2011-09-29T20:10:28Z").getTime(),
-                new Date("2011-09-30T19:30:12Z").getTime(),
-              ],
-            },
-            {
-              x: "Code",
-              y: [
-                new Date("2011-09-30T19:30:12Z").getTime(),
-                new Date("2011-09-30T22:19:58Z").getTime(),
-              ],
+              
             },
           ],
         },
@@ -102,7 +84,7 @@ export default {
     ...mapGetters(["getTemporality"]),
   },
   created() {
-      this.search("Lionel Messi");
+      //this.search("Lionel Messi");
   },
 };
 </script>

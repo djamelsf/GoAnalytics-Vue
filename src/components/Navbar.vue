@@ -20,7 +20,7 @@
             <b-nav-item href="/." class="items">Dashboard</b-nav-item>
             <b-nav-item to="/news" class="items">News articles</b-nav-item>
             <b-nav-item to="/comparison" class="items">Comparison</b-nav-item>
-            <b-nav-item to="/about" class="items">Temporality</b-nav-item>
+            <b-nav-item to="/temporality" class="items">Temporality</b-nav-item>
           </b-navbar-nav>
         </div>
       </b-collapse>

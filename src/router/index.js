@@ -21,7 +21,11 @@ const routes = [
     name: 'Comparison',
     component: () => import(/* webpackChunkName: "about" */ '../views/ComparisonPage.vue')
   },
-
+  {
+    path: '/temporality',
+    name: 'Temporality',
+    component: () => import(/* webpackChunkName: "about" */ '../views/TemporalityPage.vue')
+  },
   // { path: '/gare/:id', component: () => import(/* webpackChunkName: "about" */ '../views/Gare.vue') }
 ]
 

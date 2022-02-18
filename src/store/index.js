@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
     dPie: null,
     articles: null,
     mPA: null,
+    temporality:null,
   },
   mutations: {
     setListe(state, liste) {
@@ -31,6 +32,9 @@ export const store = new Vuex.Store({
     },
     setMostPopularTopics(state, mPA) {
       state.mPA = mPA;
+    },
+    setTemporality(state,temporality){
+      state.temporality = temporality;
     }
   },
   actions: {
@@ -80,6 +84,14 @@ export const store = new Vuex.Store({
       });
       commit('setMostPopularTopics', [cat, counts])
     },
+    async computeTemporality({ commit }, params) {
+      let formData = new FormData();
+      formData.append("mot", params);
+      await axios.post("http://127.0.0.1:5000/temporality", formData)
+        .then(response => {
+          commit('setTemporality', response.data)
+        })
+    },
 
   },
   modules: {
@@ -90,5 +102,6 @@ export const store = new Vuex.Store({
     getDataPie: state => state.dPie,
     getArticles: state => state.articles,
     getMostPopularTopics: state => state.mPA,
+    getTemporality: state => state.temporality,
   }
 })

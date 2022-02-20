@@ -1,5 +1,6 @@
 <template>
   <div id="chart">
+    <h2>The most common topics of the articles </h2>
     <apexchart
       type="bar"
       height="600"
@@ -45,7 +46,7 @@ export default {
         },
         xaxis: {
           categories: [
-            ["Feb", "hahsssssssssssss"],
+            ["Feb", "s"],
             "Mar",
             "Apr",
             "May",
@@ -124,11 +125,7 @@ export default {
     ...mapGetters(["getMostPopularTopics"]),
   },
   async created() {
-    /*     await this.mostPopularTopics(this.dataJson);
-    this.chartOptions.xaxis.categories = this.getMostPopularTopics[0];
-    this.series[0].data = this.getMostPopularTopics[1]; */
     let res = this.traitement(this.dataJson);
-    console.log(res[1]);
     this.chartOptions.xaxis.categories = res[0];
     this.series[0].data = res[1];
   },

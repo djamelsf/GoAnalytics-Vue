@@ -26,7 +26,6 @@ const routes = [
     name: 'Temporality',
     component: () => import(/* webpackChunkName: "about" */ '../views/TemporalityPage.vue')
   },
-  // { path: '/gare/:id', component: () => import(/* webpackChunkName: "about" */ '../views/Gare.vue') }
 ]
 
 /* const User = {

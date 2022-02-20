@@ -3,14 +3,6 @@
     <b-row>
       <b-col cols="12" md="3">
         <br />
-        <!--         <b-form-input
-          placeholder="Search"
-          v-model="mot"
-          list="input-list"
-          id="input-with-list"
-          required
-        ></b-form-input> -->
-        <br />
         <b-list-group
           id="nav-scroller"
           ref="content"
@@ -32,16 +24,6 @@
           <div class="overflow-auto" style="height: 500px">
             <div class="aa" v-html="HTMLcontent"></div>
           </div>
-          <!-- --------------------------------- -->
-          <!--           <div id="chart" v-if="show">
-            <apexchart
-              type="pie"
-              width="380"
-              :options="chartOptions"
-              :series="series"
-            ></apexchart>
-          </div> -->
-          <!-- --------------------------------- -->
         </div>
         <div v-else><b-spinner label="Loading..."></b-spinner></div>
         <br />
@@ -71,19 +53,12 @@
             </wordcloud>
           </b-col>
         </b-row>
-
-        <!--     <div id="nav-scroller" style="position: relative; height: 400px; overflow-y: scroll">
-          <b-table hover :items="defaultWords"></b-table>
-        </div> -->
-
-        <!-- --------------------------------- -->
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-//import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
 import dataJson from "../assets/data.json";
 import tfidf from "../assets/TF_IDF.json";

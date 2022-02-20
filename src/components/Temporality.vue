@@ -23,11 +23,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-//import axios from "axios";
-/* import { mapGetters, mapActions } from "vuex"; */
 import words from "../assets/words.json";
-//import tfidf from "../assets/TF_IDF.json";
-//import wordcloud from "vue-wordcloud";
 export default {
   name: "Temporality",
   data: function () {
@@ -37,11 +33,7 @@ export default {
       options: words,
       series: [
         {
-          data: [
-            {
-              
-            },
-          ],
+          data: [{}],
         },
       ],
       chartOptions: {
@@ -64,7 +56,7 @@ export default {
     async search(word) {
       await this.computeTemporality(word);
       let res = this.getTemporality;
-      let tab=[]
+      let tab = [];
       res.forEach((element) => {
         let t = {
           x: element["x"],
@@ -75,8 +67,8 @@ export default {
         };
         tab.push(t);
       });
-      this.series=[{data:tab}];
-      console.log(this.series)
+      this.series = [{ data: tab }];
+      console.log(this.series);
     },
     ...mapActions(["computeTemporality"]),
   },
@@ -84,7 +76,7 @@ export default {
     ...mapGetters(["getTemporality"]),
   },
   created() {
-      //this.search("Lionel Messi");
+    //this.search("Lionel Messi");
   },
 };
 </script>

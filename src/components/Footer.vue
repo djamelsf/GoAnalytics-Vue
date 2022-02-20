@@ -1,10 +1,6 @@
 <template>
    <div>
       <footer>
-         <div class="social-media">
-            <a href="https://github.com/djamelsf/DataViz"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-         </div>
          <div class="copyrights">Copyright © 2022</div>
       </footer>
    </div>

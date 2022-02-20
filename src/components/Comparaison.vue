@@ -74,11 +74,8 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-//import axios from "axios";
-/* import { mapGetters, mapActions } from "vuex"; */
 import dataJson from "../assets/data.json";
-//import tfidf from "../assets/TF_IDF.json";
-//import wordcloud from "vue-wordcloud";
+
 export default {
   name: "Comparaison",
   data: function () {
@@ -89,7 +86,7 @@ export default {
       img: null,
       html: "",
       data: [],
-      jaccard:null,
+      jaccard: null,
       options: [],
       doc1: null,
       doc2: null,
@@ -158,7 +155,7 @@ export default {
       await this.jSim([this.doc1, this.doc2]);
       this.cosine = this.getData;
       this.sim = this.getDataSpacy;
-      this.jaccard=this.getDataJ;
+      this.jaccard = this.getDataJ;
       this.show = true;
       this.sh = true;
     },
@@ -219,10 +216,10 @@ export default {
 
       this.show = true;
     },
-    ...mapActions(["link", "simSpacy", "dataPie","jSim"]),
+    ...mapActions(["link", "simSpacy", "dataPie", "jSim"]),
   },
   computed: {
-    ...mapGetters(["getData", "getDataSpacy", "getDataPie","getDataJ"]),
+    ...mapGetters(["getData", "getDataSpacy", "getDataPie", "getDataJ"]),
   },
   created() {
     let tab = [];
